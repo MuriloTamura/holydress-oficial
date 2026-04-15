@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+:root {
+    --background-light: #f7f1eb;
+    --background-dark: #000000;
+    --text-color-white: #ffffff;
+    --text-color-black: #000000;
+    --primary-color: #ffde50;
+    --secundary-color: #1b1b1b;
+}
+
+section.contato {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: black;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+.carousel-contato {
+    position: absolute;
+    align-items: center;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.carousel-track-contato {
+    display: flex;
+    will-change: transform;
+    /* A animação é calculada pelo JS com base na largura real */
+}
+
+/* Cada slide tem largura fixa baseada na proporção da altura */
+.slide-contato {
+    flex: 0 0 auto;
+    width: auto;
+    height: 60vh;
+    box-sizing: border-box;
+    margin-right: 15px;
+}
+
+.slide-contato img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    opacity: 0.9;
+}
+
+.container-contato {
+    width: 500px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    color: var(--text-color-white);
+    padding: 30px 40px;
+    box-shadow: 0 0 10px var(--background-dark);
+    backdrop-filter: blur(20px);
+    z-index: 1;
+}
+
+.container-contato h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.inputbox-contato {
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.inputbox-contato input,
+.inputbox-contato textarea {
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    outline: none;
+    font-size: 16px;
+    color: var(--text-color-white);
+    padding: 20px 45px 20px 20px;
+    font-family: "Oswald", sans-serif;
+}
+
+.inputbox-contato textarea {
+    border-radius: 20px;
+    resize: vertical;
+    min-height: 120px;
+    padding: 15px 20px;
+}
+
+.inputbox-contato input::placeholder,
+.inputbox-contato textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.inputbox-contato i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--text-color-white);
+}
+
+.inputbox-contato.textarea i {
+    top: 25px;
+    transform: none;
+}
+
+.contato-button {
+    width: 100%;
+    height: 50px;
+    background-color: var(--text-color-white);
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--secundary-color);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contato-button:hover {
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: var(--text-color-white);
+}
+
+.contato-button i {
+    font-size: 20px;
+}
+
+.social-links-contato {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+.social-links-contato p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.social-icons-contato {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons-contato a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: 0.2rem solid var(--primary-color);
+    font-size: 2rem;
+    border-radius: 50%;
+    transition: 0.3s ease;
+    color: var(--primary-color);
+}
+
+.social-icons-contato a:hover {
+    color: var(--background-dark);
+    transform: scale(1.3) translateY(-5px);
+    background-color: var(--primary-color);
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+@media(max-width: 768px) {
+    .container-contato {
+        width: 90%;
+        padding: 25px 30px;
+    }
+
+    .container-contato h1 {
+        font-size: 28px;
+    }
+
+    .slide-contato {
+        height: 40vh;
+    }
+
+    .carousel-contato {
+        height: 40vh;
+    }
+}

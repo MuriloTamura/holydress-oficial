@@ -1,0 +1,440 @@
+/* Estilo do botão do carrinho no header */
+.cart-button {
+    position: relative;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.cart-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+.cart-button i {
+    font-size: 20px;
+    color: var(--background-dark);
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Sidebar do Carrinho */
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.cart-modal.active {
+    pointer-events: auto;
+}
+
+/* Overlay escuro */
+.cart-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.cart-modal.active::before {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sidebar */
+.cart-content {
+    position: absolute;
+    top: 0;
+    right: -450px;
+    width: 450px;
+    height: 100%;
+    background-color: var(--background-light);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-modal.active .cart-content {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--secundary-color);
+}
+
+.cart-header h2 {
+    font-size: 28px;
+    color: var(--text-color-white);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: var(--text-color-white);
+    cursor: pointer;
+    transition: 0.3s ease;
+    line-height: 1;
+}
+
+.close-cart:hover {
+    color: var(--primary-color);
+    transform: rotate(90deg);
+}
+
+.cart-items {
+    padding: 20px 25px;
+    overflow-y: auto;
+    flex: 1;
+    background-color: var(--background-light);
+}
+
+/* Scrollbar personalizada para a sidebar */
+.cart-items::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cart-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.cart-items::-webkit-scrollbar-thumb:hover {
+    background: #e6c940;
+}
+
+.cart-empty {
+    text-align: center;
+    color: var(--text-color-black);
+    font-size: 18px;
+    padding: 60px 20px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-item:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cart-item-info {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.cart-item-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color-black);
+    margin-bottom: 5px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.cart-item-price {
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 10px;
+}
+
+.quantity-btn {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--background-dark);
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.quantity-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color-black);
+    min-width: 25px;
+    text-align: center;
+}
+
+.remove-item {
+    background-color: #ff4444;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.remove-item:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+.cart-footer {
+    padding: 20px 25px;
+    border-top: 2px solid var(--primary-color);
+    background-color: white;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color-black);
+}
+
+.cart-total strong {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
+}
+
+#cart-total-price {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.send-whatsapp-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #25D366;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s ease;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
+}
+
+.send-whatsapp-btn:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+.send-whatsapp-btn i {
+    font-size: 24px;
+}
+
+.send-whatsapp-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.send-whatsapp-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Notificação de item adicionado */
+.cart-notification {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 1001;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.4s ease;
+}
+
+.cart-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.cart-notification i {
+    font-size: 20px;
+}
+
+/* Animação bounce para o carrinho */
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ============================================
+   MOBILE - Apenas para telas menores
+   ============================================ */
+
+@media(max-width: 768px) {
+    .cart-content {
+        width: 100%;
+        right: -100%;
+    }
+
+    .cart-header {
+        padding: 20px;
+    }
+
+    .cart-header h2 {
+        font-size: 24px;
+    }
+
+    .cart-items {
+        padding: 15px;
+    }
+
+    .cart-footer {
+        padding: 15px;
+    }
+
+    .cart-item {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .cart-item-info {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .cart-item-quantity {
+        margin: 0;
+    }
+    
+    .cart-notification {
+        top: 80px;
+        right: 20px;
+        left: 20px;
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 480px) {
+    .cart-button {
+        width: 45px;
+        height: 45px;
+        margin-right: 15px;
+    }
+
+    .cart-button i {
+        font-size: 18px;
+    }
+
+    .cart-count {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    .cart-header h2 {
+        font-size: 22px;
+    }
+
+    .close-cart {
+        font-size: 36px;
+    }
+
+    .cart-total {
+        font-size: 20px;
+    }
+
+    .send-whatsapp-btn {
+        font-size: 16px;
+        padding: 13px;
+    }
+
+    .cart-notification {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+}
+
+/* Prevenir scroll do body quando sidebar estiver aberta */
+body.cart-open {
+    overflow: hidden;
+}

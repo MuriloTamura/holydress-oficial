@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./styles/menu.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/models.css">
+    <link rel="stylesheet" href="./styles/novidades.css">
+    <link rel="stylesheet" href="./styles/about.css">
+    <link rel="stylesheet" href="./styles/contato.css">
+    <link rel="stylesheet" href="./styles/cart.css">
+    <link rel="stylesheet" href="./styles/product-modal.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <script src="./scripts/menu.js" defer></script>
+    <script src="./scripts/header.js" defer></script>
+    <script src="./scripts/models.js" defer></script>
+    <script src="./scripts/contato.js" defer></script>
+    <script src="./scripts/smooth-scroll.js" defer></script>
+    <title>Holydress</title>
+
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+</head>
+
+<body>
+    <header>
+        <a href="#menu" class="logo"><img src="./images/logo.webp" alt="" height="30px"></a>
+
+        <div class="header-right">
+            <!-- Ícone do menu hambúrguer -->
+            <i class='bx bx-menu' id="menu-icon"></i>
+            
+            <nav>
+                <a href="#menu">Menu</a>
+                <a href="#novidades">Modelos</a>
+                <a href="#about">Sobre</a>
+                <a href="#contato">Contato</a>
+            </nav>
+
+            <button id="cart-button" class="cart-button">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count" class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Notificação de item adicionado -->
+    <div id="cart-notification" class="cart-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Item adicionado ao carrinho!</span>
+    </div>
+
+    <!-- Modal do Carrinho -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Meu Carrinho</h2>
+                <button id="close-cart" class="close-cart">&times;</button>
+            </div>
+            <div id="cart-items" class="cart-items">
+                <p class="cart-empty">Seu carrinho está vazio</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total:</strong>
+                    <span id="cart-total-price">R$0,00</span>
+                </div>
+                <button id="send-whatsapp" class="send-whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    Finalizar Pedido via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <section id="menu" class="home">
+    <div class="container-slider">
+        <h2 class="title-about">Lançamentos</h2>
+        <!-- Badge de Lançamentos -->
+        
+        <!-- Container das imagens -->
+        <div class="container-images">
+            <button id="prev"></button>
+            
+            <img src="Blusas/NovidadeCopa03.webp" alt="Blusa" class="slider on">
+            <img src="Blusas/NovidadeCopa04.webp" alt="Blusa" class="slider">
+            <img src="Blusas/NovidadeCopa05.webp" alt="Blusa" class="slider">
+            <img src="Blusas/NovidadeCopa06.webp" alt="Blusa" class="slider">
+            <button id="next"></button>
+        </div>
+    </div>
+    
+    <div class="home-content">
+        <h1>Graça e paz, <br> isso é <span>Holy Dress</span></h1>
+        <h3 class="typing-text"> Olá, <span></span></h3>
+        <p>Seja muito bem-vindo à Holy Dress!
+
+Aqui, cada peça carrega mais do que estilo, carrega o ministério de fazer o ide.<br><br> Criamos camisas personalizadas com artes e temas ministrados aos nossos corações, pra que você possa vestir o evangelho e anunciar Jesus por onde passar.<br>
+
+Navegue com calma, conheça nossos modelos, leia a história por trás de cada um e, se sentir no coração, vista nossas mensagens e pregue o evangelho sem usar palavras.<br>
+
+<br>Jesus está vivo, e Ele está voltando! É uma alegria ter você aqui. Que Deus te abençoe!</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/holy.dress?igsh=MW1lMXl2MDc5dTJwNA==" target="_blank"><i
+                    class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5585981728681" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://br.pinterest.com/holydresshd/" target="_blank"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <a href="#novidades" class="btn">Escolha a sua</a>
+    </div>
+</section>
+
+    <!-- ===== SEÇÃO UNIFICADA: NOVIDADES + MODELOS ===== -->
+    <section class="models" id="novidades">
+
+        <!-- Bloco Novidades -->
+        <h2 class="title-models">Modelos Copa</h2>
+        <div class="boxes">
+
+            <!-- Card Copa 1 -->
+            <div class="box-model">
+                <div class="item-model">
+                    <span class="limited-tag">LIMITADO</span>
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Brasil Frente.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/Mkp Brasil Costas.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa01.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa02.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa03.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa04.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa05.webp" alt="Amarela">
+                        <img class="model-image" src="Blusas/AmarelaCopa06.webp" alt="Amarela">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Brasil</h3>
+                        <p class="model-price">R$55,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Amarela" data-descricao="Nova camiseta Amarela Copa — vista sua fé com estilo e propósito.">Escolher Modelo</button>
+                </div>
+            </div>
+
+            <!-- Card Copa 2 -->
+            <div class="box-model">
+                <div class="item-model">
+                    <span class="limited-tag">LIMITADO</span>
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Nação Frente.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/Mkp Nação Coastas.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa01.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa02.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa03.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa04.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa05.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/BrancaCopa06.webp" alt="Branca">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Nação</h3>
+                        <p class="model-price">R$55,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Branca" data-descricao="Nova camiseta Branca Copa — vista sua fé com estilo e propósito.">Escolher Modelo</button>
+                </div>
+            </div>
+
+            <!-- Card Copa 3 -->
+            <div class="box-model">
+                <div class="item-model">
+                    <span class="limited-tag">LIMITADO</span>
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Amazônia Frente.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/Mkp Amazônia Costas.webp" alt="Branca">
+                        <img class="model-image" src="Blusas/VerdeCopa01.webp" alt="Verde">
+                        <img class="model-image" src="Blusas/VerdeCopa02.webp" alt="Verde">
+                        <img class="model-image" src="Blusas/VerdeCopa03.webp" alt="Verde">
+                        <img class="model-image" src="Blusas/VerdeCopa04.webp" alt="Verde">
+                        <img class="model-image" src="Blusas/VerdeCopa05.webp" alt="Verde">
+                        <img class="model-image" src="Blusas/VerdeCopa06.webp" alt="Verde">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Amazônia</h3>
+                        <p class="model-price">R$45,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Verde" data-descricao="Nova camiseta Verde Copa — vista sua fé com estilo e propósito.">Escolher Modelo</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Separador entre blocos -->
+        <div class="section-divider">
+            <h2 class="title-models" id="modelos">Nossos Modelos</h2>
+        </div>
+
+        <!-- Bloco Modelos -->
+        <div class="boxes">
+
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Esperança Frente.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Mkp Esperança Costas.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Esperança01.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Esperança02.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Esperança03.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Esperança04.webp" alt="Esperança">
+                        <img class="model-image" src="Blusas/Esperança05.webp" alt="Esperança">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Esperança</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Esperança"
+                        data-descricao="A Esperança não é ingênua, ela é certeza do que ainda não se vê. Esta peça foi feita para quem segura firme a promessa mesmo nos dias difíceis.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Criação Frente.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Mkp Criação Costas.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Criação01.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Criação02.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Criação03.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Criação04.webp" alt="Criação">
+                        <img class="model-image" src="Blusas/Criação05.webp" alt="Criação">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Criação</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Criação"
+                        data-descricao="A primeira blusa da Holy Dress. Nasceu de um presente e se tornou o símbolo de tudo que acreditamos: que Deus cria coisas novas, em você e por meio de você.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Kairos Frente.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Mkp Kairos Costas.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Kairos01.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Kairos02.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Kairos03.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Kairos04.webp" alt="Kairos">
+                        <img class="model-image" src="Blusas/Kairos05.webp" alt="Kairos">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Kairós</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Kairós"
+                        data-descricao="Kairós é o tempo de Deus, não o nosso. Esta blusa é para quem aprendeu que os planos Dele são maiores, e escolhe confiar mesmo sem entender o caminho.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Êxodo Frente.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Mkp Êxodo Costas.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Exodo01.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Exodo02.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Exodo03.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Exodo04.webp" alt="Êxodo">
+                        <img class="model-image" src="Blusas/Exodo05.webp" alt="Êxodo">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Êxodo</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Êxodo"
+                        data-descricao="Essa cena nos lembra que a presença de Deus é santa, viva e transformadora. Assim como Moisés foi chamado, nós também somos convidados a reconhecer e ouvir a voz de Deus em nossa vida.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Timoteo Frente.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Mkp Timoteo Costas.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Timoteo01.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Timoteo02.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Timoteo03.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Timoteo04.webp" alt="Timoteo">
+                        <img class="model-image" src="Blusas/Timoteo05.webp" alt="Timoteo">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Timóteo</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Timóteo"
+                        data-descricao="A nossa nova camisa Timóteo carrega esse lembrete: permanecer em Cristo é resistir, é não se deixar levar pela direção da multidão, mas seguir firme no caminho da verdade.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+            <div class="box-model">
+                <div class="item-model">
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Mkp Montanhas Frente.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Mkp Montanhas Costas.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Montanhas01.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Montanhas02.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Montanhas03.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Montanhas04.webp" alt="Montanhas">
+                        <img class="model-image" src="Blusas/Montanhas05.webp" alt="Montanhas">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Montanhas</h3>
+                        <p class="model-price">R$65,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Montanhas"
+                        data-descricao="Acima das maiores dificuldades, Deus está. A blusa Montanhas é para quem sabe que a fé move o que parece impossível e que no alto de qualquer montanha, Ele já estava lá.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ===== FIM SEÇÃO UNIFICADA ===== -->
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="history">
+                    <img class="history-image" src="Blusas/Criação Crazy.webp" alt="Criação Crazy">
+                <div class="history-text">
+                    <h2 class="title-about">Nossa História</h2>
+                    <p>
+                        A Holydress nasceu de uma única blusa, um presente criado para um casal, com o propósito de expressar nossa fé e o amor triangular que compartilhamos com Deus.
+                        Na primeira vez que usamos a blusa Criação, símbolo do início de tudo, percebemos algo especial: as pessoas que a viram se encantaram e começaram a pedir por mais peças.
+                        Foi então que entendemos que havia algo maior acontecendo. Passamos a produzir novos modelos, todos feitos à mão com tinta e pincel, sempre colocando intenção, cuidado e propósito em cada detalhe.
+                        À medida que o projeto crescia, vimos claramente a mão de Deus conduzindo tudo e percebemos que Ele tinha planos maiores do que imaginávamos, e por isso aceitamos a missão de compartilhar o Evangelho por meio da moda, levando a mensagem de Cristo através de cada peça criada.
+                    </p>
+                </div>
+            </div>
+        <div class="objective-content">
+            <h2 class="title-objective">Nosso Objetivo</h2>
+            <div class="objective-text">
+                <p>
+                    A gente acredita que o Evangelho não precisa ficar preso entre quatro paredes, 
+                    e muito menos depende de um microfone para ser ouvido. Na verdade, às vezes a 
+                    mensagem mais poderosa é aquela dita sem nenhuma palavra.
+                </p>
+                <p>
+                    Nosso objetivo é transformar o seu estilo em um <strong>instrumento de alcance</strong>. 
+                    Queremos que, ao bater o olho na sua camiseta, alguém seja impactado pela Verdade. 
+                    É sobre levar Jesus para a faculdade, para a academia e para as ruas.
+                </p>
+                <p class="highlight-text">
+                    Nossa moda é para quem entende que <strong>você é a mensagem</strong>. 
+                    Vista-se da missão e deixe que o seu look pregue por você.
+                </p>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contato">
+        <div class="carousel-contato">
+            <div class="carousel-track-contato">
+                <div class="slide-contato"><img src="Blusas/CarrosselCriação01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselEsperança01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselMilagres04.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselTimoteo02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselMontanhas01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselKairos01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselTimoteo01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselMilagres02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselExodo01.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselCriação02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/Esperança02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselMontanhas02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselExodo02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselKairos02.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/Esperança05.webp" alt=""></div>
+                <div class="slide-contato"><img src="Blusas/CarrosselMilagres03.webp" alt=""></div>
+            </div>
+        </div>
+
+        <main class="container-contato">
+            <form id="contatoForm">
+                <h1>Entre em Contato</h1>
+
+                <div class="inputbox-contato">
+                    <input placeholder="Seu Nome" type="text" id="nome" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="inputbox-contato">
+                    <input placeholder="Seu WhatsApp (opcional)" type="tel" id="telefone">
+                    <i class="bx bxs-phone"></i>
+                </div>
+
+                <div class="inputbox-contato textarea">
+                    <textarea placeholder="Sua Mensagem" id="mensagem" required></textarea>
+                    <i class="bx bxs-message-dots"></i>
+                </div>
+
+                <button type="submit" class="contato-button">
+                    <i class="fab fa-whatsapp"></i>
+                    Enviar via WhatsApp
+                </button>
+
+                <div class="social-links-contato">
+                    <p>Ou fale conosco através das redes:</p>
+                    <div class="social-icons-contato">
+                        <a href="https://www.instagram.com/holy.dress?igsh=MW1lMXl2MDc5dTJwNA==" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/5585920038680" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://pin.it/2fiJNqbxh" target="_blank">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </section>
+    <!-- Modal de Detalhes do Produto -->
+    <div class="product-modal" id="product-modal">
+        <div class="product-modal-content">
+            <!-- Header do Modal -->
+            <div class="product-modal-header">
+                <h2 class="product-modal-title" id="modal-product-title">Produto</h2>
+                <button class="close-product-modal" id="close-product-modal">&times;</button>
+            </div>
+
+            <!-- Body do Modal -->
+            <div class="product-modal-body">
+                <!-- Galeria de Imagens -->
+                <div class="product-gallery">
+                    <div class="product-main-image-container">
+                        <img src="" alt="Produto" class="product-main-image" id="product-main-image">
+                    </div>
+                    
+                    <div class="product-thumbnails" id="product-thumbnails">
+                        <!-- Miniaturas serão inseridas aqui via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Informações do Produto -->
+                <div class="product-info">
+                    <!-- Preço -->
+                    <div class="product-price" id="modal-product-price">R$ 0,00</div>
+                    
+                    <!-- Descrição -->
+                    <div class="product-description" id="modal-product-description">
+                        Descrição do produto
+                    </div>
+
+                    <!-- Seleção de Tipo -->
+                    <div class="product-type-section">
+                        <label class="section-label">
+                            <i class="fas fa-tshirt"></i>
+                            Tipo de Camisa
+                        </label>
+                        <div class="product-type-options" id="product-type-options">
+                            <button class="type-option" onclick="selectType('basica')">Básica</button>
+                            <button class="type-option" onclick="selectType('oversized')">Oversized</button>
+                            <button class="type-option" onclick="selectType('infantil')">Infantil</button>
+                        </div>
+                    </div>
+
+                    <!-- Seleção de Tamanho -->
+                    <div class="product-size-section">
+                        <label class="section-label">
+                            <i class="fas fa-ruler"></i>
+                            Tamanho
+                        </label>
+                        <div class="product-size-options" id="product-size-options">
+                            <!-- Tamanhos serão inseridos aqui via JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Medidas -->
+                    <div class="size-guide">
+                        <button class="size-guide-toggle" id="size-guide-toggle" onclick="toggleSizeGuide()">
+                            <i class="fas fa-ruler-combined"></i>
+                            Ver Tabela de Medidas
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="size-guide-content" id="size-guide-content">
+                            <img src="./images/tabela-basica.webp" alt="Tabela de Medidas" id="size-guide-image">
+                        </div>
+                    </div>
+
+                    <!-- Aviso de Seleção -->
+                    <div class="selection-warning" id="selection-warning"></div>
+
+                    <!-- Botão Adicionar ao Carrinho -->
+                    <button class="product-add-to-cart" id="product-add-to-cart" onclick="addToCartFromModal()">
+                        <i class="fas fa-shopping-cart"></i>
+                        Adicionar ao Carrinho
+                    </button>
+
+                    <!-- Informações Extras -->
+                    <div class="product-extra-info">
+                        <div class="info-item">
+                            <i class="fas fa-truck"></i>
+                            <div class="info-item-text">
+                                <strong>Entrega para todo Brasil</strong>
+                                <p>Frete calculado no checkout</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="info-item-text">
+                                <strong>Compra 100% segura</strong>
+                                <p>Seus dados estão protegidos</p>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./scripts/cart.js" defer></script>
+    <script src="./scripts/product-modal.js" defer></script>
+
+    <footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Coluna da Marca -->
+        <div class="footer-brand">
+            <div class="footer-logo-container">
+                <a href="#menu" class="logo"><img src="./images/logo.png" alt="" height="30px"></a>
+                <p class="footer-tagline">
+                    Moda cristã com estilo e propósito.<br>
+                    Vista sua fé todos os dias.
+                </p>
+            </div>
+            
+            <!-- Seção de Criadores -->
+            <div class="footer-creators">
+                <h4>Desenvolvido por</h4>
+                <div class="creators-links">
+                    <a href="https://github.com/lucaspgouv" target="_blank" class="creator-link">
+                        <i class="fab fa-github"></i>
+                        Lucas Gouveia
+                    </a>
+                    <a href="https://github.com/MuriloTamura" target="_blank" class="creator-link">
+                        <i class="fab fa-github"></i>
+                        Murilo Tamura
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contato -->
+        <div class="footer-col">
+            <h3>Contato</h3>
+            <ul>
+                <li>
+                    <a href="https://wa.me/5585920038680" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        (85) 920038680
+                    </a>
+                </li>
+                <li>
+                    <a class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        holydresshd@gmail.com
+                    </a>
+                </li>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    Fortaleza - CE
+                </li>
+            </ul>
+        </div>
+
+        <!-- Redes Sociais -->
+        <div class="footer-col">
+            <h3>Redes Sociais</h3>
+            <ul>
+                <li>
+                    <a href="https://www.instagram.com/holy.dress?igsh=MW1lMXl2MDc5dTJwNA==" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        Instagram
+                    </a>
+                </li>
+                <li>
+                    <a href="https://br.pinterest.com/holydresshd/" target="_blank">
+                        <i class="fab fa-pinterest"></i>
+                        Pinterest
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Links Rápidos -->
+        <div class="footer-col">
+            <h3>Links Rápidos</h3>
+            <ul>
+                <li>
+                    <a href="#menu">
+                        <i class="fas fa-home"></i>
+                        Início
+                    </a>
+                </li>
+                <li>
+                    <a href="#novidades">
+                        <i class="fas fa-tshirt"></i>
+                        Modelos
+                    </a>
+                </li>
+                <li>
+                    <a href="#about">
+                        <i class="fas fa-info-circle"></i>
+                        Sobre
+                    </a>
+                </li>
+                <li>
+                    <a href="#contato">
+                        <i class="fas fa-envelope"></i>
+                        Contato
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Políticas -->
+        <div class="footer-col">
+            <h3>Políticas</h3>
+            <ul>
+                <li>
+                    <a href="politica-frete.html">
+                        <i class="fas fa-shipping-fast"></i>
+                        Frete e Entrega
+                    </a>
+                </li>
+                <li>
+                    <a href="politica-troca.html">
+                        <i class="fas fa-exchange-alt"></i>
+                        Trocas e Devoluções
+                    </a>
+                </li>
+                <li>
+                    <a href="politica-privacidade.html">
+                        <i class="fas fa-shield-alt"></i>
+                        Privacidade
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+   
+   <div class="footer-bottom">
+        <p>&copy; 2024 Holy Dress. Todos os direitos reservados.</p>
+        <span style="font-size:10px;opacity:0.35;font-family:monospace;letter-spacing:0.5px;">V 26.01</span>
+    </div>
+
+</footer>
+
+<script src="./scripts/cart.js" defer></script>
+
+<script src="./scripts/product-modal.js" defer></script>
+
+</body>
+
+</html>

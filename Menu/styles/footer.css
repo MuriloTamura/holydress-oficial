@@ -1,0 +1,336 @@
+/* ========================================
+   FOOTER - Holy Dress (Redesenhado)
+======================================== */
+
+.footer{
+    background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    color: #fff;
+    padding: 80px 20px 30px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+/* Linha decorativa superior */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-color) 20%,
+        var(--primary-color) 80%, 
+        transparent 100%);
+    box-shadow: 0 2px 15px rgba(255, 222, 80, 0.5);
+}
+
+/* Padrão decorativo de fundo */
+.footer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 222, 80, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 222, 80, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Container centralizado */
+.footer-container{
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Coluna da marca (primeira coluna - mais larga) */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.footer-logo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-logo-container .logo {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo-container .logo:hover {
+    transform: translateY(-3px);
+}
+
+.footer-logo-container .logo img {
+    height: 70px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(255, 222, 80, 0.4));
+}
+
+.footer-tagline {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #b0b0b0;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+}
+
+/* Colunas de conteúdo */
+.footer-col h3{
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--primary-color);
+    box-shadow: 0 0 8px rgba(255, 222, 80, 0.6);
+}
+
+.footer-col ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-col ul li{
+    font-size: 14px;
+    font-family: 'Oswald', sans-serif;
+    color: #b0b0b0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-col ul li:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+/* Links */
+.footer-col a{
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-col a:hover{
+    color: var(--primary-color);
+}
+
+.footer-col a i {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.footer-col a:hover i {
+    transform: scale(1.2);
+}
+
+/* Seção de criadores */
+.footer-creators {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 222, 80, 0.1);
+}
+
+.footer-creators h4 {
+    font-size: 14px;
+    color: var(--primary-color);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.creators-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.creator-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(255, 222, 80, 0.05);
+    border: 1px solid rgba(255, 222, 80, 0.2);
+    border-radius: 20px;
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Oswald', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.creator-link:hover {
+    background: rgba(255, 222, 80, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 222, 80, 0.2);
+}
+
+.creator-link i {
+    font-size: 18px;
+}
+
+/* Barra inferior */
+.footer-bottom{
+    border-top: 1px solid rgba(255, 222, 80, 0.15);
+    margin-top: 60px;
+    padding-top: 25px;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    font-family: 'Oswald', sans-serif;
+    position: relative;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Versão do site - discreta */
+.footer-version {
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+    font-size: 10px;
+    color: #888;
+    opacity: 0.6;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media(max-width: 1024px){
+    .footer-container{
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+    }
+    
+    .footer-creators {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 768px){
+    .footer{
+        padding: 60px 20px 25px;
+    }
+    
+    .footer-container{
+        grid-template-columns: 1fr 1fr;
+        gap: 35px;
+    }
+    
+    .footer-brand {
+        grid-column: 1 / -1;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-col h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .footer-col ul {
+        align-items: center;
+    }
+    
+    .footer-col ul li:hover {
+        transform: translateX(0);
+    }
+    
+    .footer-creators {
+        text-align: center;
+    }
+    
+    .creators-links {
+        justify-content: center;
+    }
+}
+
+@media(max-width: 480px){
+    .footer{
+        padding: 50px 15px 20px;
+    }
+    
+    .footer-container{
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .footer-brand {
+        gap: 20px;
+    }
+    
+    .footer-logo-container .logo img {
+        height: 60px;
+    }
+    
+    .footer-col h3 {
+        font-size: 16px;
+    }
+    
+    .footer-col ul li {
+        font-size: 13px;
+        justify-content: center;
+    }
+    
+    .footer-bottom {
+        margin-top: 40px;
+        padding-top: 20px;
+        font-size: 12px;
+    }
+    
+    .creators-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .creator-link {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}

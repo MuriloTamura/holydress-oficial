@@ -1,0 +1,448 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+:root{
+    --background-light: #f7f1eb;
+    --background-dark: #000000;
+    --text-color-white: #ffffff;
+    --text-color-black: #000000;
+    --primary-color: #ffde50;
+    --secundary-color: #1b1b1b;
+    --secondary-color-dark: #000;
+}
+
+html{ 
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--background-light);
+    overflow-x: hidden;
+}
+
+.models{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 80px 20px 30px 20px;
+    width: 100%;
+    min-height: 100vh;
+    color: var(--text-color-black);
+    font-family: 'Bebas Neue', cursive;
+}
+
+/* ============================================
+   SEPARADOR ENTRE BLOCOS (Copa → Modelos)
+   ============================================ */
+
+.section-divider {
+    width: 100%;
+    max-width: 1100px;
+    margin: 40px 0 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+.section-divider::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+    margin-bottom: 30px;
+}
+
+/* ============================================
+   GRID DESKTOP: 3 em cima, 3 embaixo
+   Grid de 3 colunas onde cada card ocupa 1 coluna.
+   ============================================ */
+
+.boxes{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.box-model{
+    grid-column: span 1;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Remove posições explícitas antigas */
+.box-model:nth-child(5),
+.box-model:nth-child(6),
+.box-model:nth-child(7) {
+    grid-column: span 1;
+}
+
+/* ============================================
+   CARD
+   ============================================ */
+
+.item-model{
+    background-color: white;
+    color: var(--text-color-black);
+    width: 100%;
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.item-model:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(255, 222, 80, 0.3);
+    border-color: var(--primary-color);
+}
+
+/* ============================================
+   TAGS
+   ============================================ */
+
+.new-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #f5ff6b 0%, #fcff44 100%);
+    color: black;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1.5px;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.5);
+    animation: pulseGlow 2s ease-in-out infinite;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.limited-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #dd5858 0%, #fd2020 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1.5px;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(173, 68, 68, 0.5);
+    animation: pulseLimited 2s ease-in-out infinite;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 252, 68, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(255, 227, 68, 0.7);
+    }
+}
+
+@keyframes pulseLimited {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(173, 68, 68, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(173, 68, 68, 0.7);
+    }
+}
+
+/* ============================================
+   IMAGENS
+   ============================================ */
+
+.model-images{
+    position: relative;
+    width: 100%;
+    height: 280px;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.model-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px 20px 0 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Primeira e segunda imagem: contain para não cortar */
+.model-image:nth-child(1),
+.model-image:nth-child(2) {
+    object-fit: contain;
+    object-position: center;
+}
+
+.item-model > .model-image{
+    position: relative;
+    opacity: 1;
+    width: 100%;
+    height: 280px;
+    border-radius: 20px 20px 0 0;
+    object-fit: cover;
+}
+
+.model-image.on{
+    opacity: 1;
+}
+
+/* ============================================
+   TEXTO
+   ============================================ */
+
+.text-model{
+    margin: 0;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.title-models{
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 25px;
+    color: var(--text-color-black);
+    font-family: 'Bebas Neue', cursive;
+}
+
+.name-model{
+    font-size: 24px;
+    color: var(--text-color-black);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
+}
+
+.model-price{
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* ============================================
+   BOTÃO
+   ============================================ */
+
+.add-to-cart,
+.view-details-btn {
+    width: calc(100% - 40px);
+    margin: auto 20px 20px 20px;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #ffd000 100%);
+    border: none;
+    border-radius: 12px;
+    color: var(--background-dark);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 222, 80, 0.3);
+}
+
+.add-to-cart:hover,
+.view-details-btn:hover {
+    background: linear-gradient(135deg, #ffd000 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 222, 80, 0.5);
+}
+
+.add-to-cart:active,
+.view-details-btn:active {
+    transform: translateY(0);
+}
+
+.add-to-cart i,
+.view-details-btn i {
+    font-size: 16px;
+}
+
+/* ============================================
+   TABLET (max 768px) - 2 colunas
+   ============================================ */
+
+@media (max-width: 768px) {
+    .models {
+        padding: 60px 15px 20px 15px;
+    }
+
+    .boxes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Reset TODAS as posições explícitas do desktop */
+    .box-model,
+    .box-model:nth-child(5),
+    .box-model:nth-child(6),
+    .box-model:nth-child(7) {
+        grid-column: span 1;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    /* Último item sozinho na linha: centraliza com mesmo tamanho dos outros */
+    .box-model:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        max-width: calc(50% - 6px);
+        margin: 0 auto;
+    }
+
+    .item-model {
+        border-radius: 18px;
+    }
+
+    .model-images,
+    .item-model > .model-image {
+        height: 220px;
+    }
+
+    .title-models {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .name-model {
+        font-size: 20px;
+    }
+
+    .model-price {
+        font-size: 17px;
+    }
+
+    .text-model {
+        padding: 15px;
+    }
+
+    .add-to-cart,
+    .view-details-btn {
+        padding: 12px;
+        font-size: 14px;
+        width: calc(100% - 30px);
+        margin: auto 15px 15px 15px;
+    }
+}
+
+/* ============================================
+   MOBILE (max 480px) - 2 colunas menores
+   ============================================ */
+
+@media (max-width: 480px) {
+    .boxes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    /* Reset posições explícitas */
+    .box-model,
+    .box-model:nth-child(5),
+    .box-model:nth-child(6),
+    .box-model:nth-child(7) {
+        grid-column: span 1;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    /* Último item sozinho na linha: centraliza */
+    .box-model:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        max-width: calc(50% - 5px);
+        margin: 0 auto;
+    }
+
+    .model-images,
+    .item-model > .model-image {
+        height: 180px;
+    }
+
+    .title-models {
+        font-size: 32px;
+    }
+
+    .text-model {
+        padding: 12px;
+    }
+
+    .name-model {
+        font-size: 16px;
+    }
+
+    .model-price {
+        font-size: 15px;
+    }
+
+    .add-to-cart,
+    .view-details-btn {
+        width: calc(100% - 24px);
+        margin: auto 12px 12px 12px;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .new-tag,
+    .limited-tag {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+/* ============================================
+   MOBILE PEQUENO (max 360px)
+   ============================================ */
+
+@media (max-width: 360px) {
+    .title-models {
+        font-size: 28px;
+    }
+
+    .model-images,
+    .item-model > .model-image {
+        height: 160px;
+    }
+}

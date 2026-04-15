@@ -1,0 +1,313 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family: "Oswald", sans-serif;
+}
+
+html{ 
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+:root{
+    --background-light: #f7f1eb;
+    --background-dark: #000000;
+    --text-color-white: #ffffff;
+    --text-color-black: #000000;
+    --primary-color: #ffde50;
+    --secundary-color: #1b1b1b;
+    --secondary-color-dark: #000;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-color: var(--background-light);
+    color: var(--text-color-white);
+}
+
+header {
+    margin-top: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: var(--background-dark);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header.light-header {
+    background-color: var(--background-light);
+    color: var(--text-color-black);
+}
+
+header.light-header .logo {
+    color: var(--text-color-black);
+}
+
+header.light-header nav a {
+    color: var(--text-color-black);
+}
+
+header.light-header nav a.active,
+header.light-header nav a:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+header.light-header #menu-icon {
+    color: var(--text-color-black);
+}
+
+header.dark-header {
+    background-color: #1b1b1b;
+}
+
+header.dark-header nav a {
+    color: #fff;
+}
+
+header.dark-header nav a:hover,
+header.dark-header nav a.active {
+    color: #ffde50;
+}
+
+header.dark-header .logo {
+    color: #ffde50;
+}
+
+header.dark-header #menu-icon {
+    color: #ffde50;
+}
+
+header nav a {
+    transition: color 0.3s ease;
+}
+
+.logo{
+    font-size: 3rem;
+    color: var(--primary-color);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin: 10px 0 10px 50px;
+}
+
+.logo:hover{
+    transform: scale(1.1);
+}
+
+nav{
+    display: flex;
+    align-items: center;
+}
+
+nav a{
+    font-size: 1.8rem;
+    color: var(--text-color-white);
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+nav a:hover, nav a.active{
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+/* Ícone do menu hambúrguer - escondido por padrão */
+#menu-icon {
+    font-size: 3rem;
+    color: var(--text-color-white);
+    display: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#menu-icon:hover {
+    color: var(--primary-color);
+}
+
+/* ============================================
+   MOBILE - Apenas para telas menores que 995px
+   ============================================ */
+@media(max-width:995px){
+    .logo {
+        margin: 10px 0 10px 20px;
+        font-size: 2.5rem;
+    }
+
+    /* Mostrar ícone do menu hambúrguer */
+    #menu-icon {
+        display: block;
+        z-index: 101;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    /* Quando menu está aberto, mover ícone X para dentro do menu */
+    #menu-icon.bx-x {
+        position: fixed;
+        right: 25px;
+        top: 25px;
+        color: var(--primary-color);
+        font-size: 3.5rem;
+    }
+
+    .header-right {
+        position: relative;
+    }
+
+    nav{
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        padding: 7rem 3rem 2rem;
+        background-color: var(--secundary-color);
+        flex-direction: column;
+        align-items: flex-start;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+        transition: right 0.4s ease;
+        z-index: 100;
+        display: flex;
+    }
+    
+    nav.active{
+        right: 0;
+    }
+
+    nav a{
+        display: block;
+        font-size: 2rem;
+        margin: 0;
+        padding: 2rem 1.5rem;
+        width: 100%;
+        border-bottom: 2px solid rgba(255, 222, 80, 0.1);
+        color: var(--text-color-white) !important;
+        transition: all 0.3s ease;
+    }
+
+    nav a:last-child {
+        border-bottom: none;
+    }
+
+    nav a:hover,
+    nav a.active{
+        background-color: rgba(255, 222, 80, 0.1);
+        border-radius: 0.5rem;
+        color: var(--primary-color) !important;
+        border-bottom: 2px solid var(--primary-color);
+    }
+}
+
+/* Mobile médio */
+@media(max-width: 768px){
+    .logo {
+        font-size: 2.2rem;
+        margin-left: 10px;
+    }
+
+    nav {
+        width: 220px;
+    }
+
+    #menu-icon {
+        font-size: 2.8rem;
+    }
+}
+
+/* Mobile pequeno */
+@media(max-width: 480px){
+    .logo {
+        font-size: 2rem;
+    }
+
+    nav {
+        width: 220px;
+        padding: 6rem 2rem 2rem; /* Reduzido de 8rem para 6rem */
+    }
+
+    nav a {
+        font-size: 1.8rem;
+        padding: 1.5rem 1.2rem;
+    }
+
+    #menu-icon {
+        font-size: 2.8rem;
+    }
+    
+    #menu-icon.bx-x {
+        right: 20px;
+        top: 20px;
+        font-size: 3.2rem;
+    }
+}
+
+/* Mobile extra pequeno - 360px */
+@media(max-width: 360px){
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    nav {
+        width: 200px;
+        padding: 6.5rem 1.5rem 2rem; /* Reduzido de 8.5rem para 6.5rem */
+    }
+
+    nav a {
+        font-size: 1.7rem;
+        padding: 1.4rem 1rem;
+    }
+
+    #menu-icon {
+        font-size: 2.6rem;
+    }
+    
+    #menu-icon.bx-x {
+        right: 18px;
+        top: 18px;
+        font-size: 3rem;
+    }
+}
+
+section#novidades ~ header,
+section#modelos ~ header {
+    background-color: var(--background-light);
+}
+
+section#novidades ~ header nav a,
+section#modelos ~ header nav a {
+    color: var(--text-color-black);
+}
+
+section#novidades ~ header nav a.active,
+section#novidades ~ header nav a:hover,
+section#modelos ~ header nav a.active,
+section#modelos ~ header nav a:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+section#novidades ~ header .logo,
+section#modelos ~ header .logo {
+    color: var(--text-color-black);
+}
