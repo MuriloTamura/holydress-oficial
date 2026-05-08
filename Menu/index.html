@@ -23,6 +23,34 @@
     <title>Holydress</title>
 
     <link rel="icon" type="image/png" href="./images/favicon.png">
+    <style>
+        /* Botões de tipo indisponível */
+        .type-option.type-unavailable {
+            position: relative;
+            opacity: 0.45;
+            cursor: not-allowed !important;
+            border-color: #555 !important;
+            background: #1e1e1e !important;
+            color: #777 !important;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .type-option.type-unavailable:hover {
+            border-color: #555 !important;
+            background: #1e1e1e !important;
+            color: #777 !important;
+        }
+        .unavailable-badge {
+            display: block;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ff6b6b;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -466,9 +494,9 @@ Navegue com calma, conheça nossos modelos, leia a história por trás de cada u
                             Tipo de Camisa
                         </label>
                         <div class="product-type-options" id="product-type-options">
-                            <button class="type-option" onclick="selectType('basica')">Básica</button>
+                            <button class="type-option type-unavailable" onclick="selectType('basica')" title="Sem estoque no momento">Básica<span class="unavailable-badge">Indisponível</span></button>
                             <button class="type-option" onclick="selectType('oversized')">Oversized</button>
-                            <button class="type-option" onclick="selectType('infantil')">Infantil</button>
+                            <button class="type-option type-unavailable" onclick="selectType('infantil')" title="Sem estoque no momento">Infantil<span class="unavailable-badge">Indisponível</span></button>
                         </div>
                     </div>
 

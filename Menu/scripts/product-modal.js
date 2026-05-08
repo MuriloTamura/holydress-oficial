@@ -380,8 +380,16 @@ function closeProductModal() {
     }, 350); // Igual ao tempo de transition no CSS
 }
 
+// Tipos indisponíveis (sem estoque)
+const unavailableTypes = ['basica', 'infantil'];
+
 // Selecionar tipo de camisa
 function selectType(type) {
+    // Bloquear tipos indisponíveis
+    if (unavailableTypes.includes(type)) {
+        return;
+    }
+
     selectedType = type;
     selectedSize = null;
     
@@ -447,9 +455,9 @@ function resetSelections() {
         option.classList.remove('selected');
     });
     
-    // Configurar tamanhos padrão (Básica)
-    updateAvailableSizes('basica');
-    updateSizeGuideImage('basica');
+    // Configurar tamanhos padrão (Oversized - única disponível)
+    updateAvailableSizes('oversized');
+    updateSizeGuideImage('oversized');
     
     // Esconder warning
     document.getElementById('selection-warning').classList.remove('show');
