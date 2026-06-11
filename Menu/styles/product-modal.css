@@ -418,6 +418,55 @@
     font-size: 20px;
 }
 
+/* Banner de Produto Esgotado no Modal */
+.soldout-modal-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #2a1a1a, #1a0a0a);
+    border: 1.5px solid #cc3333;
+    border-radius: 10px;
+    margin: 16px 0 24px 0;
+}
+
+.soldout-modal-banner i {
+    font-size: 22px;
+    color: #ff4444;
+    flex-shrink: 0;
+}
+
+.soldout-modal-banner-text strong {
+    display: block;
+    font-size: 15px;
+    color: #ff4444;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.soldout-modal-banner-text p {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.4;
+}
+
+.soldout-disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: #555 !important;
+    box-shadow: none !important;
+    color: #999 !important;
+}
+
+.soldout-disabled:hover {
+    background: #555 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 /* Aviso de Seleção */
 .selection-warning {
     padding: 12px 16px;

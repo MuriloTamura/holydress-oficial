@@ -331,6 +331,19 @@ function setupProductGallery(images) {
     });
 }
 
+// Verificar se um produto está esgotado pelo atributo data-esgotado do botão do card
+function isProductEsgotado(productName) {
+    const cards = document.querySelectorAll('.item-model');
+    for (let card of cards) {
+        const nameEl = card.querySelector('.name-model');
+        if (nameEl && nameEl.textContent.trim() === productName) {
+            const btn = card.querySelector('.view-details-btn');
+            return btn && btn.getAttribute('data-esgotado') === 'true';
+        }
+    }
+    return false;
+}
+
 // Abrir modal de produto
 function openProductModal(productName) {
     const modal = document.getElementById('product-modal');
@@ -348,13 +361,58 @@ function openProductModal(productName) {
     // Preencher informações do produto
     document.getElementById('modal-product-title').textContent = product.name;
     document.getElementById('modal-product-description').textContent = product.description;
-    document.getElementById('modal-product-price').textContent = `R$ ${product.price.toFixed(2)}`;
+
+    // Verificar se esgotado
+    const esgotado = isProductEsgotado(productName);
+
+    // Preço: riscado se esgotado
+    const priceEl = document.getElementById('modal-product-price');
+    priceEl.innerHTML = esgotado
+        ? `<span style="text-decoration:line-through;color:#666;font-size:0.85em;">R$ ${product.price.toFixed(2)}</span>`
+        : `R$ ${product.price.toFixed(2)}`;
+
+    // Banner de esgotado (inserir após o preço)
+    const existingBanner = document.getElementById('soldout-modal-banner');
+    if (existingBanner) existingBanner.remove();
+
+    if (esgotado) {
+        const banner = document.createElement('div');
+        banner.id = 'soldout-modal-banner';
+        banner.className = 'soldout-modal-banner';
+        banner.innerHTML = `
+            <i class="fas fa-ban"></i>
+            <div class="soldout-modal-banner-text">
+                <strong>Produto Esgotado</strong>
+                <p>Este modelo está temporariamente indisponível. Fique atento às novidades!</p>
+            </div>`;
+        priceEl.insertAdjacentElement('afterend', banner);
+    }
+
+    // Botão de adicionar ao carrinho
+    const addBtn = document.getElementById('product-add-to-cart');
+    if (esgotado) {
+        addBtn.disabled = true;
+        addBtn.classList.add('soldout-disabled');
+        addBtn.innerHTML = '<i class="fas fa-ban"></i> Produto Esgotado';
+    } else {
+        addBtn.disabled = false;
+        addBtn.classList.remove('soldout-disabled');
+        addBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho';
+    }
+
+    // Ocultar seções de tipo/tamanho se esgotado
+    const typeSection = document.querySelector('.product-type-section');
+    const sizeSection = document.querySelector('.product-size-section');
+    const sizeGuide = document.querySelector('.size-guide');
+    if (typeSection) typeSection.style.display = esgotado ? 'none' : '';
+    if (sizeSection) sizeSection.style.display = esgotado ? 'none' : '';
+    if (sizeGuide) sizeGuide.style.display = esgotado ? 'none' : '';
     
     // Configurar galeria de imagens
     setupProductGallery(product.images);
     
-    // Resetar seleções
-    resetSelections();
+    // Resetar seleções (só se disponível)
+    if (!esgotado) resetSelections();
     
     // Mostrar modal
     modal.classList.add('active');
