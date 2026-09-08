@@ -3,21 +3,26 @@
 
 // Configuração de tamanhos por tipo
 const sizesConfig = {
-    'basica': {
-        label: 'Básica',
-        sizes: ['P', 'M', 'G', 'GG'],
-        sizeGuideImage: './images/tabela-basica.jpeg'
-    },
     'oversized': {
         label: 'Oversized',
         sizes: ['P', 'M', 'G', 'GG'],
         sizeGuideImage: './images/tabela-oversized.jpeg'
     },
-    'infantil': {
-        label: 'Infantil',
-        sizes: ['4', '6', '8', '10', '12'],
-        sizeGuideImage: './images/tabela-infantil.jpeg'
+    'cropped': {
+        label: 'Cropped',
+        sizes: ['P', 'M', 'G', 'GG'],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
+    },
+    'moletom': {
+        label: 'Moletom',
+        sizes: ['P', 'M', 'G', 'GG'],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
     }
+};
+
+const defaultProductTypes = ['oversized'];
+const productTypes = {
+    'Frutos': ['oversized', 'cropped', 'moletom']
 };
 
 let currentProduct = null;
@@ -357,6 +362,8 @@ function openProductModal(productName) {
     currentProduct = productName;
     selectedType = null;
     selectedSize = null;
+
+    renderProductTypes(productName);
     
     // Preencher informações do produto
     document.getElementById('modal-product-title').textContent = product.name;
@@ -438,16 +445,25 @@ function closeProductModal() {
     }, 350); // Igual ao tempo de transition no CSS
 }
 
-// Tipos indisponíveis (sem estoque)
-const unavailableTypes = ['basica', 'infantil'];
+// Montar os tipos disponíveis para cada produto
+function renderProductTypes(productName) {
+    const typeOptionsContainer = document.getElementById('product-type-options');
+    const availableTypes = productTypes[productName] || defaultProductTypes;
+
+    typeOptionsContainer.innerHTML = '';
+
+    availableTypes.forEach(type => {
+        const typeOption = document.createElement('button');
+        typeOption.type = 'button';
+        typeOption.className = 'type-option';
+        typeOption.textContent = sizesConfig[type].label;
+        typeOption.onclick = () => selectType(type, typeOption);
+        typeOptionsContainer.appendChild(typeOption);
+    });
+}
 
 // Selecionar tipo de camisa
-function selectType(type) {
-    // Bloquear tipos indisponíveis
-    if (unavailableTypes.includes(type)) {
-        return;
-    }
-
+function selectType(type, clickedOption) {
     selectedType = type;
     selectedSize = null;
     
@@ -455,7 +471,7 @@ function selectType(type) {
     document.querySelectorAll('.type-option').forEach(option => {
         option.classList.remove('selected');
     });
-    event.target.classList.add('selected');
+    if (clickedOption) clickedOption.classList.add('selected');
     
     // Atualizar tamanhos disponíveis
     updateAvailableSizes(type);
@@ -546,7 +562,7 @@ function addToCartFromModal() {
     
     // Validar seleções
     if (!selectedType) {
-        warningElement.textContent = '⚠️ Por favor, selecione o tipo de camisa (Básica, Oversized ou Infantil)';
+        warningElement.textContent = '⚠️ Por favor, selecione o tipo de camisa';
         warningElement.classList.add('show');
         return;
     }

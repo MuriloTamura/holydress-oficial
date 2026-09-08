@@ -83,6 +83,11 @@ body{
     min-width: 0;
 }
 
+/* Centraliza o card único do bloco de destaque na grade desktop */
+.boxes-featured .box-model {
+    grid-column: 2;
+}
+
 /* Remove posições explícitas antigas */
 .box-model:nth-child(5),
 .box-model:nth-child(6),
