@@ -25,9 +25,32 @@ const productTypes = {
     'Frutos': ['oversized', 'cropped', 'moletom']
 };
 
+// Variações exclusivas do modelo Frutos.
+// Ao adicionar novas fotos, mantenha estes nomes nas respectivas pastas.
+const productVariants = {
+    'Frutos': {
+        oversized: {
+            price: 55
+        },
+        cropped: {
+            price: 45,
+            images: [1, 2, 3, 4, 5].map(number =>
+                `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`
+            )
+        },
+        moletom: {
+            price: 110,
+            images: [1, 2, 3, 4, 5].map(number =>
+                `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`
+            )
+        }
+    }
+};
+
 let currentProduct = null;
 let selectedType = null;
 let selectedSize = null;
+let selectedPrice = null;
 let zoomLens = null;
 let currentZoomHandlers = null;
 
@@ -336,6 +359,40 @@ function setupProductGallery(images) {
     });
 }
 
+// Retorna somente as imagens que já existem, evitando miniaturas quebradas.
+function getAvailableVariantImages(images) {
+    return Promise.all(images.map(src => new Promise(resolve => {
+        const image = new Image();
+        image.onload = () => resolve(src);
+        image.onerror = () => resolve(null);
+        image.src = src;
+    }))).then(results => results.filter(Boolean));
+}
+
+// Atualiza preço e galeria ao trocar o tipo do produto.
+async function updateProductVariant(type) {
+    const product = getProdutoData(currentProduct);
+    const variant = productVariants[currentProduct]?.[type];
+
+    if (!product) return;
+
+    selectedPrice = variant?.price ?? product.price;
+    document.getElementById('modal-product-price').textContent =
+        `R$ ${selectedPrice.toFixed(2).replace('.', ',')}`;
+
+    if (!variant?.images) {
+        setupProductGallery(product.images);
+        return;
+    }
+
+    const variantImages = await getAvailableVariantImages(variant.images);
+
+    // Impede que um carregamento anterior sobrescreva uma seleção mais recente.
+    if (selectedType !== type) return;
+
+    setupProductGallery(variantImages.length > 0 ? variantImages : product.images);
+}
+
 // Verificar se um produto está esgotado pelo atributo data-esgotado do botão do card
 function isProductEsgotado(productName) {
     const cards = document.querySelectorAll('.item-model');
@@ -362,6 +419,7 @@ function openProductModal(productName) {
     currentProduct = productName;
     selectedType = null;
     selectedSize = null;
+    selectedPrice = product.price;
 
     renderProductTypes(productName);
     
@@ -442,6 +500,7 @@ function closeProductModal() {
         currentProduct = null;
         selectedType = null;
         selectedSize = null;
+        selectedPrice = null;
     }, 350); // Igual ao tempo de transition no CSS
 }
 
@@ -478,6 +537,9 @@ function selectType(type, clickedOption) {
     
     // Atualizar imagem da tabela de medidas
     updateSizeGuideImage(type);
+
+    // Atualizar preço e fotos da variação
+    updateProductVariant(type);
     
     // Esconder warning
     document.getElementById('selection-warning').classList.remove('show');
@@ -579,7 +641,7 @@ function addToCartFromModal() {
     // Montar nome completo do produto
     const typeLabel = sizesConfig[selectedType].label;
     const fullProductName = `${currentProduct} - ${typeLabel} (${selectedSize})`;
-    const price = product.price;
+    const price = selectedPrice ?? product.price;
     
     // Adicionar ao carrinho
     addToCart(fullProductName, price);
