@@ -11,12 +11,12 @@ const sizesConfig = {
     'cropped': {
         label: 'Cropped',
         sizes: ['P', 'M', 'G', 'GG'],
-        sizeGuideImage: './images/tabela-oversized.jpeg'
+        sizeGuideImage: './images/tabela-cropped.webp'
     },
     'moletom': {
         label: 'Moletom',
         sizes: ['P', 'M', 'G', 'GG'],
-        sizeGuideImage: './images/tabela-oversized.jpeg'
+        sizeGuideImage: './images/tabela-moletom.webp'
     }
 };
 
@@ -565,6 +565,10 @@ function updateAvailableSizes(type) {
 function updateSizeGuideImage(type) {
     const sizeGuideImg = document.getElementById('size-guide-image');
     const config = sizesConfig[type];
+    sizeGuideImg.onerror = () => {
+        sizeGuideImg.onerror = null;
+        sizeGuideImg.src = './images/tabela-oversized.jpeg';
+    };
     sizeGuideImg.src = config.sizeGuideImage;
 }
 
