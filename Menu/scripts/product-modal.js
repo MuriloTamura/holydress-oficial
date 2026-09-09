@@ -470,8 +470,8 @@ function openProductModal(productName) {
     // Preço: riscado se esgotado
     const priceEl = document.getElementById('modal-product-price');
     priceEl.innerHTML = esgotado
-        ? `<span style="text-decoration:line-through;color:#666;font-size:0.85em;">R$ ${product.price.toFixed(2)}</span>`
-        : `R$ ${product.price.toFixed(2)}`;
+        ? `<span style="text-decoration:line-through;color:#666;font-size:0.85em;">R$ ${product.price.toFixed(2).replace('.', ',')}</span>`
+        : `R$ ${product.price.toFixed(2).replace('.', ',')}`;
 
     // Banner de esgotado (inserir após o preço)
     const existingBanner = document.getElementById('soldout-modal-banner');
