@@ -10,13 +10,30 @@ const sizesConfig = {
     },
     'cropped': {
         label: 'Cropped',
-        sizes: ['P', 'M', 'G', 'GG'],
+        sizes: ['P', 'M', 'G'],
         sizeGuideImage: './images/tabela-cropped.webp'
     },
     'moletom': {
         label: 'Moletom',
         sizes: ['P', 'M', 'G', 'GG'],
         sizeGuideImage: './images/tabela-moletom.webp'
+    },
+    'combo_camisa_cropped': {
+        label: 'Combo Camisa + Cropped',
+        items: [
+            { key: 'camisa', label: 'Camisa', sizes: ['P', 'M', 'G', 'GG'] },
+            { key: 'cropped', label: 'Cropped', sizes: ['P', 'M', 'G'] }
+        ],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
+    },
+    'combo_completo': {
+        label: 'Combo Camisa + Cropped + Moletom',
+        items: [
+            { key: 'camisa', label: 'Camisa', sizes: ['P', 'M', 'G', 'GG'] },
+            { key: 'cropped', label: 'Cropped', sizes: ['P', 'M', 'G'] },
+            { key: 'moletom', label: 'Moletom', sizes: ['P', 'M', 'G', 'GG'] }
+        ],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
     }
 };
 
@@ -43,6 +60,21 @@ const productVariants = {
             images: [1, 2, 3, 4, 5].map(number =>
                 `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`
             )
+        },
+        combo_camisa_cropped: {
+            price: 90,
+            images: [
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`)
+            ]
+        },
+        combo_completo: {
+            price: 180,
+            images: [
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`)
+            ]
         }
     }
 };
@@ -50,7 +82,10 @@ const productVariants = {
 let currentProduct = null;
 let selectedType = null;
 let selectedSize = null;
+let selectedComboSizes = {};
 let selectedPrice = null;
+let currentSizeGuides = [];
+let currentSizeGuideIndex = 0;
 let zoomLens = null;
 let currentZoomHandlers = null;
 
@@ -419,9 +454,11 @@ function openProductModal(productName) {
     currentProduct = productName;
     selectedType = null;
     selectedSize = null;
+    selectedComboSizes = {};
     selectedPrice = product.price;
 
     renderProductTypes(productName);
+    renderProductCombos(productName);
     
     // Preencher informações do produto
     document.getElementById('modal-product-title').textContent = product.name;
@@ -500,6 +537,7 @@ function closeProductModal() {
         currentProduct = null;
         selectedType = null;
         selectedSize = null;
+        selectedComboSizes = {};
         selectedPrice = null;
     }, 350); // Igual ao tempo de transition no CSS
 }
@@ -521,13 +559,44 @@ function renderProductTypes(productName) {
     });
 }
 
+// Exibir combos somente para o modelo Frutos
+function renderProductCombos(productName) {
+    const comboSection = document.getElementById('product-combo-section');
+    const comboOptions = document.getElementById('product-combo-options');
+
+    comboOptions.innerHTML = '';
+    comboSection.hidden = productName !== 'Frutos';
+
+    if (productName !== 'Frutos') return;
+
+    [
+        { type: 'combo_camisa_cropped', name: 'Camisa + Cropped', originalPrice: 100, price: 90, savings: 10 },
+        { type: 'combo_completo', name: 'Camisa + Cropped + Moletom', originalPrice: 210, price: 180, savings: 30 }
+    ].forEach(combo => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'combo-option';
+        option.innerHTML = `
+            <span class="combo-check"><i class="fas fa-check"></i></span>
+            <span class="combo-option-content">
+                <strong>${combo.name}</strong>
+                <small class="combo-original-price">De R$ ${combo.originalPrice},00</small>
+                <span class="combo-price">R$ ${combo.price},00</span>
+            </span>
+            <span class="combo-saving">Economize R$ ${combo.savings}</span>`;
+        option.onclick = () => selectType(combo.type, option);
+        comboOptions.appendChild(option);
+    });
+}
+
 // Selecionar tipo de camisa
 function selectType(type, clickedOption) {
     selectedType = type;
     selectedSize = null;
+    selectedComboSizes = {};
     
     // Atualizar UI dos tipos
-    document.querySelectorAll('.type-option').forEach(option => {
+    document.querySelectorAll('.type-option, .combo-option').forEach(option => {
         option.classList.remove('selected');
     });
     if (clickedOption) clickedOption.classList.add('selected');
@@ -551,6 +620,31 @@ function updateAvailableSizes(type) {
     const config = sizesConfig[type];
     
     sizeOptionsContainer.innerHTML = '';
+    sizeOptionsContainer.classList.toggle('combo-mode', Boolean(config.items));
+
+    if (config.items) {
+        config.items.forEach(item => {
+            const group = document.createElement('div');
+            group.className = 'combo-size-group';
+            group.innerHTML = `<span class="combo-size-label"><i class="fas fa-shirt"></i>${item.label}</span>`;
+
+            const options = document.createElement('div');
+            options.className = 'combo-size-options';
+
+            item.sizes.forEach(size => {
+                const sizeOption = document.createElement('div');
+                sizeOption.className = 'size-option';
+                sizeOption.textContent = size;
+                sizeOption.dataset.item = item.key;
+                sizeOption.onclick = () => selectSize(size, item.key);
+                options.appendChild(sizeOption);
+            });
+
+            group.appendChild(options);
+            sizeOptionsContainer.appendChild(group);
+        });
+        return;
+    }
     
     config.sizes.forEach(size => {
         const sizeOption = document.createElement('div');
@@ -563,23 +657,65 @@ function updateAvailableSizes(type) {
 
 // Atualizar imagem da tabela de medidas
 function updateSizeGuideImage(type) {
-    const sizeGuideImg = document.getElementById('size-guide-image');
     const config = sizesConfig[type];
+    const itemTypeMap = { camisa: 'oversized', cropped: 'cropped', moletom: 'moletom' };
+
+    currentSizeGuides = config.items
+        ? config.items.map(item => ({
+            label: item.label,
+            image: sizesConfig[itemTypeMap[item.key]].sizeGuideImage
+        }))
+        : [{ label: config.label, image: config.sizeGuideImage }];
+    currentSizeGuideIndex = 0;
+    renderCurrentSizeGuide();
+}
+
+function renderCurrentSizeGuide() {
+    const sizeGuideImg = document.getElementById('size-guide-image');
+    const label = document.getElementById('size-guide-label');
+    const counter = document.getElementById('size-guide-counter');
+    const prevButton = document.getElementById('size-guide-prev');
+    const nextButton = document.getElementById('size-guide-next');
+    const guide = currentSizeGuides[currentSizeGuideIndex];
+
+    if (!guide) return;
+
+    label.textContent = guide.label;
+    counter.textContent = currentSizeGuides.length > 1
+        ? `${currentSizeGuideIndex + 1} de ${currentSizeGuides.length}`
+        : '';
+    prevButton.hidden = currentSizeGuides.length <= 1;
+    nextButton.hidden = currentSizeGuides.length <= 1;
+    sizeGuideImg.alt = `Tabela de medidas: ${guide.label}`;
     sizeGuideImg.onerror = () => {
         sizeGuideImg.onerror = null;
         sizeGuideImg.src = './images/tabela-oversized.jpeg';
     };
-    sizeGuideImg.src = config.sizeGuideImage;
+    sizeGuideImg.src = guide.image;
+}
+
+function changeSizeGuide(direction) {
+    if (currentSizeGuides.length <= 1) return;
+
+    currentSizeGuideIndex = (
+        currentSizeGuideIndex + direction + currentSizeGuides.length
+    ) % currentSizeGuides.length;
+    renderCurrentSizeGuide();
 }
 
 // Selecionar tamanho
-function selectSize(size) {
-    selectedSize = size;
+function selectSize(size, itemKey = null) {
+    if (itemKey) {
+        selectedComboSizes[itemKey] = size;
+    } else {
+        selectedSize = size;
+    }
     
     // Atualizar UI dos tamanhos
     document.querySelectorAll('.size-option').forEach(option => {
-        option.classList.remove('selected');
-        if (option.textContent === size) {
+        const sameGroup = itemKey ? option.dataset.item === itemKey : !option.dataset.item;
+        if (sameGroup) option.classList.remove('selected');
+        if (sameGroup && option.textContent === size) {
             option.classList.add('selected');
         }
     });
@@ -590,8 +726,9 @@ function selectSize(size) {
 
 // Resetar seleções
 function resetSelections() {
+    selectedComboSizes = {};
     // Resetar tipos
-    document.querySelectorAll('.type-option').forEach(option => {
+    document.querySelectorAll('.type-option, .combo-option').forEach(option => {
         option.classList.remove('selected');
     });
     
@@ -633,7 +770,16 @@ function addToCartFromModal() {
         return;
     }
     
-    if (!selectedSize) {
+    const selectedConfig = sizesConfig[selectedType];
+    const missingComboItem = selectedConfig.items?.find(item => !selectedComboSizes[item.key]);
+
+    if (missingComboItem) {
+        warningElement.textContent = `⚠️ Selecione o tamanho de: ${missingComboItem.label}`;
+        warningElement.classList.add('show');
+        return;
+    }
+
+    if (!selectedConfig.items && !selectedSize) {
         warningElement.textContent = '⚠️ Por favor, selecione um tamanho';
         warningElement.classList.add('show');
         return;
@@ -643,8 +789,11 @@ function addToCartFromModal() {
     const product = getProdutoData(currentProduct);
     
     // Montar nome completo do produto
-    const typeLabel = sizesConfig[selectedType].label;
-    const fullProductName = `${currentProduct} - ${typeLabel} (${selectedSize})`;
+    const typeLabel = selectedConfig.label;
+    const sizeDescription = selectedConfig.items
+        ? selectedConfig.items.map(item => `${item.label}: ${selectedComboSizes[item.key]}`).join(', ')
+        : selectedSize;
+    const fullProductName = `${currentProduct} - ${typeLabel} (${sizeDescription})`;
     const price = selectedPrice ?? product.price;
     
     // Adicionar ao carrinho

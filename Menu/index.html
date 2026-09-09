@@ -425,6 +425,15 @@ Navegue com calma, conheça nossos modelos, leia a história por trás de cada u
                         </div>
                     </div>
 
+                    <!-- Combos exclusivos do produto (preenchidos via JavaScript) -->
+                    <div class="product-combo-section" id="product-combo-section" hidden>
+                        <label class="section-label">
+                            <i class="fas fa-tags"></i>
+                            Compre junto e economize
+                        </label>
+                        <div class="product-combo-options" id="product-combo-options"></div>
+                    </div>
+
                     <!-- Seleção de Tamanho -->
                     <div class="product-size-section">
                         <label class="section-label">
@@ -444,7 +453,21 @@ Navegue com calma, conheça nossos modelos, leia a história por trás de cada u
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="size-guide-content" id="size-guide-content">
-                            <img src="./images/tabela-oversized.jpeg" alt="Tabela de Medidas" id="size-guide-image">
+                            <div class="size-guide-heading">
+                                <strong id="size-guide-label">Camisa</strong>
+                                <span id="size-guide-counter"></span>
+                            </div>
+                            <div class="size-guide-viewer">
+                                <button type="button" class="size-guide-nav size-guide-prev" id="size-guide-prev"
+                                    onclick="changeSizeGuide(-1)" aria-label="Tabela anterior">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <img src="./images/tabela-oversized.jpeg" alt="Tabela de medidas da camisa" id="size-guide-image">
+                                <button type="button" class="size-guide-nav size-guide-next" id="size-guide-next"
+                                    onclick="changeSizeGuide(1)" aria-label="Próxima tabela">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
