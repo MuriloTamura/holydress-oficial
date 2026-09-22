@@ -46,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let count = imgs.length;
         if (count === 0) return cb();
         imgs.forEach(img => {
-            if (img.complete && img.naturalWidth > 0) {
+            // complete também indica imagens cujo carregamento já falhou.
+            // Nesse caso, o evento error já ocorreu e não deve ser aguardado.
+            if (img.complete) {
                 count--;
                 if (count === 0) cb();
             } else {

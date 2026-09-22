@@ -153,7 +153,16 @@ function sendToWhatsApp() {
     const mensagemCodificada = encodeURIComponent(mensagem);
     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
 
-    window.open(urlWhatsApp, '_blank');
+    const whatsappWindow = window.open(urlWhatsApp, '_blank');
+    if (!whatsappWindow) {
+        showNotification('Permita a abertura do WhatsApp no navegador e tente novamente.');
+        return;
+    }
+
+    // O pedido já está na URL do WhatsApp; limpar também o carrinho salvo.
+    cart = [];
+    updateCartUI();
+    closeCart();
 }
 
 // Event Listeners
