@@ -3,26 +3,89 @@
 
 // Configuração de tamanhos por tipo
 const sizesConfig = {
-    'basica': {
-        label: 'Básica',
-        sizes: ['P', 'M', 'G', 'GG'],
-        sizeGuideImage: './images/tabela-basica.jpeg'
-    },
     'oversized': {
         label: 'Oversized',
         sizes: ['P', 'M', 'G', 'GG'],
         sizeGuideImage: './images/tabela-oversized.jpeg'
     },
-    'infantil': {
-        label: 'Infantil',
-        sizes: ['4', '6', '8', '10', '12'],
-        sizeGuideImage: './images/tabela-infantil.jpeg'
+    'cropped': {
+        label: 'Cropped',
+        sizes: ['P', 'M', 'G'],
+        sizeGuideImage: './images/tabela-cropped.webp'
+    },
+    'moletom': {
+        label: 'Moletom',
+        sizes: ['P', 'M', 'G', 'GG'],
+        sizeGuideImage: './images/tabela-moletom.webp'
+    },
+    'combo_camisa_cropped': {
+        label: 'Combo Camisa + Cropped',
+        items: [
+            { key: 'camisa', label: 'Camisa', sizes: ['P', 'M', 'G', 'GG'] },
+            { key: 'cropped', label: 'Cropped', sizes: ['P', 'M', 'G'] }
+        ],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
+    },
+    'combo_completo': {
+        label: 'Combo Camisa + Cropped + Moletom',
+        items: [
+            { key: 'camisa', label: 'Camisa', sizes: ['P', 'M', 'G', 'GG'] },
+            { key: 'cropped', label: 'Cropped', sizes: ['P', 'M', 'G'] },
+            { key: 'moletom', label: 'Moletom', sizes: ['P', 'M', 'G', 'GG'] }
+        ],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
+    }
+};
+
+const defaultProductTypes = ['oversized'];
+const productTypes = {
+    'Frutos': ['oversized', 'cropped', 'moletom']
+};
+
+// Variações exclusivas do modelo Frutos.
+// Ao adicionar novas fotos, mantenha estes nomes nas respectivas pastas.
+const productVariants = {
+    'Frutos': {
+        oversized: {
+            price: 55
+        },
+        cropped: {
+            price: 45,
+            images: [1, 2, 3, 4, 5].map(number =>
+                `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`
+            )
+        },
+        moletom: {
+            price: 110,
+            images: [1, 2, 3, 4, 5].map(number =>
+                `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`
+            )
+        },
+        combo_camisa_cropped: {
+            price: 90,
+            images: [
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`)
+            ]
+        },
+        combo_completo: {
+            price: 180,
+            images: [
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`)
+            ]
+        }
     }
 };
 
 let currentProduct = null;
 let selectedType = null;
 let selectedSize = null;
+let selectedComboSizes = {};
+let selectedPrice = null;
+let currentSizeGuides = [];
+let currentSizeGuideIndex = 0;
 let zoomLens = null;
 let currentZoomHandlers = null;
 
@@ -331,6 +394,40 @@ function setupProductGallery(images) {
     });
 }
 
+// Retorna somente as imagens que já existem, evitando miniaturas quebradas.
+function getAvailableVariantImages(images) {
+    return Promise.all(images.map(src => new Promise(resolve => {
+        const image = new Image();
+        image.onload = () => resolve(src);
+        image.onerror = () => resolve(null);
+        image.src = src;
+    }))).then(results => results.filter(Boolean));
+}
+
+// Atualiza preço e galeria ao trocar o tipo do produto.
+async function updateProductVariant(type) {
+    const product = getProdutoData(currentProduct);
+    const variant = productVariants[currentProduct]?.[type];
+
+    if (!product) return;
+
+    selectedPrice = variant?.price ?? product.price;
+    document.getElementById('modal-product-price').textContent =
+        `R$ ${selectedPrice.toFixed(2).replace('.', ',')}`;
+
+    if (!variant?.images) {
+        setupProductGallery(product.images);
+        return;
+    }
+
+    const variantImages = await getAvailableVariantImages(variant.images);
+
+    // Impede que um carregamento anterior sobrescreva uma seleção mais recente.
+    if (selectedType !== type) return;
+
+    setupProductGallery(variantImages.length > 0 ? variantImages : product.images);
+}
+
 // Verificar se um produto está esgotado pelo atributo data-esgotado do botão do card
 function isProductEsgotado(productName) {
     const cards = document.querySelectorAll('.item-model');
@@ -357,6 +454,11 @@ function openProductModal(productName) {
     currentProduct = productName;
     selectedType = null;
     selectedSize = null;
+    selectedComboSizes = {};
+    selectedPrice = product.price;
+
+    renderProductTypes(productName);
+    renderProductCombos(productName);
     
     // Preencher informações do produto
     document.getElementById('modal-product-title').textContent = product.name;
@@ -368,8 +470,8 @@ function openProductModal(productName) {
     // Preço: riscado se esgotado
     const priceEl = document.getElementById('modal-product-price');
     priceEl.innerHTML = esgotado
-        ? `<span style="text-decoration:line-through;color:#666;font-size:0.85em;">R$ ${product.price.toFixed(2)}</span>`
-        : `R$ ${product.price.toFixed(2)}`;
+        ? `<span style="text-decoration:line-through;color:#666;font-size:0.85em;">R$ ${product.price.toFixed(2).replace('.', ',')}</span>`
+        : `R$ ${product.price.toFixed(2).replace('.', ',')}`;
 
     // Banner de esgotado (inserir após o preço)
     const existingBanner = document.getElementById('soldout-modal-banner');
@@ -435,33 +537,78 @@ function closeProductModal() {
         currentProduct = null;
         selectedType = null;
         selectedSize = null;
+        selectedComboSizes = {};
+        selectedPrice = null;
     }, 350); // Igual ao tempo de transition no CSS
 }
 
-// Tipos indisponíveis (sem estoque)
-const unavailableTypes = ['basica', 'infantil'];
+// Montar os tipos disponíveis para cada produto
+function renderProductTypes(productName) {
+    const typeOptionsContainer = document.getElementById('product-type-options');
+    const availableTypes = productTypes[productName] || defaultProductTypes;
+
+    typeOptionsContainer.innerHTML = '';
+
+    availableTypes.forEach(type => {
+        const typeOption = document.createElement('button');
+        typeOption.type = 'button';
+        typeOption.className = 'type-option';
+        typeOption.textContent = sizesConfig[type].label;
+        typeOption.onclick = () => selectType(type, typeOption);
+        typeOptionsContainer.appendChild(typeOption);
+    });
+}
+
+// Exibir combos somente para o modelo Frutos
+function renderProductCombos(productName) {
+    const comboSection = document.getElementById('product-combo-section');
+    const comboOptions = document.getElementById('product-combo-options');
+
+    comboOptions.innerHTML = '';
+    comboSection.hidden = productName !== 'Frutos';
+
+    if (productName !== 'Frutos') return;
+
+    [
+        { type: 'combo_camisa_cropped', name: 'Camisa + Cropped', originalPrice: 100, price: 90, savings: 10 },
+        { type: 'combo_completo', name: 'Camisa + Cropped + Moletom', originalPrice: 210, price: 180, savings: 30 }
+    ].forEach(combo => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'combo-option';
+        option.innerHTML = `
+            <span class="combo-check"><i class="fas fa-check"></i></span>
+            <span class="combo-option-content">
+                <strong>${combo.name}</strong>
+                <small class="combo-original-price">De R$ ${combo.originalPrice},00</small>
+                <span class="combo-price">R$ ${combo.price},00</span>
+            </span>
+            <span class="combo-saving">Economize R$ ${combo.savings}</span>`;
+        option.onclick = () => selectType(combo.type, option);
+        comboOptions.appendChild(option);
+    });
+}
 
 // Selecionar tipo de camisa
-function selectType(type) {
-    // Bloquear tipos indisponíveis
-    if (unavailableTypes.includes(type)) {
-        return;
-    }
-
+function selectType(type, clickedOption) {
     selectedType = type;
     selectedSize = null;
+    selectedComboSizes = {};
     
     // Atualizar UI dos tipos
-    document.querySelectorAll('.type-option').forEach(option => {
+    document.querySelectorAll('.type-option, .combo-option').forEach(option => {
         option.classList.remove('selected');
     });
-    event.target.classList.add('selected');
+    if (clickedOption) clickedOption.classList.add('selected');
     
     // Atualizar tamanhos disponíveis
     updateAvailableSizes(type);
     
     // Atualizar imagem da tabela de medidas
     updateSizeGuideImage(type);
+
+    // Atualizar preço e fotos da variação
+    updateProductVariant(type);
     
     // Esconder warning
     document.getElementById('selection-warning').classList.remove('show');
@@ -473,6 +620,31 @@ function updateAvailableSizes(type) {
     const config = sizesConfig[type];
     
     sizeOptionsContainer.innerHTML = '';
+    sizeOptionsContainer.classList.toggle('combo-mode', Boolean(config.items));
+
+    if (config.items) {
+        config.items.forEach(item => {
+            const group = document.createElement('div');
+            group.className = 'combo-size-group';
+            group.innerHTML = `<span class="combo-size-label"><i class="fas fa-shirt"></i>${item.label}</span>`;
+
+            const options = document.createElement('div');
+            options.className = 'combo-size-options';
+
+            item.sizes.forEach(size => {
+                const sizeOption = document.createElement('div');
+                sizeOption.className = 'size-option';
+                sizeOption.textContent = size;
+                sizeOption.dataset.item = item.key;
+                sizeOption.onclick = () => selectSize(size, item.key);
+                options.appendChild(sizeOption);
+            });
+
+            group.appendChild(options);
+            sizeOptionsContainer.appendChild(group);
+        });
+        return;
+    }
     
     config.sizes.forEach(size => {
         const sizeOption = document.createElement('div');
@@ -485,19 +657,65 @@ function updateAvailableSizes(type) {
 
 // Atualizar imagem da tabela de medidas
 function updateSizeGuideImage(type) {
-    const sizeGuideImg = document.getElementById('size-guide-image');
     const config = sizesConfig[type];
-    sizeGuideImg.src = config.sizeGuideImage;
+    const itemTypeMap = { camisa: 'oversized', cropped: 'cropped', moletom: 'moletom' };
+
+    currentSizeGuides = config.items
+        ? config.items.map(item => ({
+            label: item.label,
+            image: sizesConfig[itemTypeMap[item.key]].sizeGuideImage
+        }))
+        : [{ label: config.label, image: config.sizeGuideImage }];
+    currentSizeGuideIndex = 0;
+    renderCurrentSizeGuide();
+}
+
+function renderCurrentSizeGuide() {
+    const sizeGuideImg = document.getElementById('size-guide-image');
+    const label = document.getElementById('size-guide-label');
+    const counter = document.getElementById('size-guide-counter');
+    const prevButton = document.getElementById('size-guide-prev');
+    const nextButton = document.getElementById('size-guide-next');
+    const guide = currentSizeGuides[currentSizeGuideIndex];
+
+    if (!guide) return;
+
+    label.textContent = guide.label;
+    counter.textContent = currentSizeGuides.length > 1
+        ? `${currentSizeGuideIndex + 1} de ${currentSizeGuides.length}`
+        : '';
+    prevButton.hidden = currentSizeGuides.length <= 1;
+    nextButton.hidden = currentSizeGuides.length <= 1;
+    sizeGuideImg.alt = `Tabela de medidas: ${guide.label}`;
+    sizeGuideImg.onerror = () => {
+        sizeGuideImg.onerror = null;
+        sizeGuideImg.src = './images/tabela-oversized.jpeg';
+    };
+    sizeGuideImg.src = guide.image;
+}
+
+function changeSizeGuide(direction) {
+    if (currentSizeGuides.length <= 1) return;
+
+    currentSizeGuideIndex = (
+        currentSizeGuideIndex + direction + currentSizeGuides.length
+    ) % currentSizeGuides.length;
+    renderCurrentSizeGuide();
 }
 
 // Selecionar tamanho
-function selectSize(size) {
-    selectedSize = size;
+function selectSize(size, itemKey = null) {
+    if (itemKey) {
+        selectedComboSizes[itemKey] = size;
+    } else {
+        selectedSize = size;
+    }
     
     // Atualizar UI dos tamanhos
     document.querySelectorAll('.size-option').forEach(option => {
-        option.classList.remove('selected');
-        if (option.textContent === size) {
+        const sameGroup = itemKey ? option.dataset.item === itemKey : !option.dataset.item;
+        if (sameGroup) option.classList.remove('selected');
+        if (sameGroup && option.textContent === size) {
             option.classList.add('selected');
         }
     });
@@ -508,8 +726,9 @@ function selectSize(size) {
 
 // Resetar seleções
 function resetSelections() {
+    selectedComboSizes = {};
     // Resetar tipos
-    document.querySelectorAll('.type-option').forEach(option => {
+    document.querySelectorAll('.type-option, .combo-option').forEach(option => {
         option.classList.remove('selected');
     });
     
@@ -546,12 +765,21 @@ function addToCartFromModal() {
     
     // Validar seleções
     if (!selectedType) {
-        warningElement.textContent = '⚠️ Por favor, selecione o tipo de camisa (Básica, Oversized ou Infantil)';
+        warningElement.textContent = '⚠️ Por favor, selecione o tipo de camisa';
         warningElement.classList.add('show');
         return;
     }
     
-    if (!selectedSize) {
+    const selectedConfig = sizesConfig[selectedType];
+    const missingComboItem = selectedConfig.items?.find(item => !selectedComboSizes[item.key]);
+
+    if (missingComboItem) {
+        warningElement.textContent = `⚠️ Selecione o tamanho de: ${missingComboItem.label}`;
+        warningElement.classList.add('show');
+        return;
+    }
+
+    if (!selectedConfig.items && !selectedSize) {
         warningElement.textContent = '⚠️ Por favor, selecione um tamanho';
         warningElement.classList.add('show');
         return;
@@ -561,9 +789,12 @@ function addToCartFromModal() {
     const product = getProdutoData(currentProduct);
     
     // Montar nome completo do produto
-    const typeLabel = sizesConfig[selectedType].label;
-    const fullProductName = `${currentProduct} - ${typeLabel} (${selectedSize})`;
-    const price = product.price;
+    const typeLabel = selectedConfig.label;
+    const sizeDescription = selectedConfig.items
+        ? selectedConfig.items.map(item => `${item.label}: ${selectedComboSizes[item.key]}`).join(', ')
+        : selectedSize;
+    const fullProductName = `${currentProduct} - ${typeLabel} (${sizeDescription})`;
+    const price = selectedPrice ?? product.price;
     
     // Adicionar ao carrinho
     addToCart(fullProductName, price);
