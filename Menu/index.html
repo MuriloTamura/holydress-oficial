@@ -117,8 +117,40 @@ Navegue com calma, conheça nossos modelos, leia a história por trás de cada u
     <!-- ===== SEÇÃO DE MODELOS ===== -->
     <section class="models" id="novidades">
 
+        <!-- Bloco Novidades -->
+        <h2 class="title-models">Modelo Sustento</h2>
+        <div class="boxes boxes-featured">
+
+            <div class="box-model">
+                <div class="item-model">
+                    <span class="limited-tag">LIMITADO</span>
+                    <div class="model-images">
+                        <img class="model-image on" src="Blusas/Sustento/Camisa/Sustento01.webp" alt="Sustento">
+                        <img class="model-image" src="Blusas/Sustento/Camisa/Sustento02.webp" alt="Sustento">
+                        <img class="model-image" src="Blusas/Sustento/Camisa/Sustento03.webp" alt="Sustento">
+                        <img class="model-image" src="Blusas/Sustento/Camisa/Sustento04.webp" alt="Sustento">
+                        <img class="model-image" src="Blusas/Sustento/Camisa/Sustento05.webp" alt="Sustento">
+                        <img class="model-image" src="Blusas/Sustento/Camisa/Sustento06.webp" alt="Sustento">
+                    </div>
+                    <div class="text-model">
+                        <h3 class="name-model">Sustento</h3>
+                        <p class="model-price">R$55,00</p>
+                    </div>
+                    <button class="view-details-btn" data-modelo="Sustento"
+                        data-descricao="Nova camiseta Sustento, inspirada no Salmo 23: 'O Senhor é o meu pastor, nada me faltará'. Disponível em oversized e moletom.">
+                        Escolher Modelo
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Separador entre blocos -->
+        <div class="section-divider">
+            <h2 class="title-models" id="modelos">Nossos Modelos</h2>
+        </div>
+
         <!-- Bloco Modelos -->
-        <h2 class="title-models" id="modelos">Nossos Modelos</h2>
         <div class="boxes">
 
             <div class="box-model">
@@ -414,6 +446,15 @@ Navegue com calma, conheça nossos modelos, leia a história por trás de cada u
                         <div class="product-type-options" id="product-type-options">
                             <button class="type-option" onclick="selectType('oversized')">Oversized</button>
                         </div>
+                    </div>
+
+                    <!-- Combos exclusivos do produto (preenchidos via JavaScript) -->
+                    <div class="product-combo-section" id="product-combo-section" hidden>
+                        <label class="section-label">
+                            <i class="fas fa-tags"></i>
+                            Compre junto e economize
+                        </label>
+                        <div class="product-combo-options" id="product-combo-options"></div>
                     </div>
 
                     <!-- Seleção de Tamanho -->
