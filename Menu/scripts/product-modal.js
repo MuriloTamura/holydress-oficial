@@ -39,7 +39,7 @@ const sizesConfig = {
 
 const defaultProductTypes = ['oversized'];
 const productTypes = {
-    'Frutos': ['oversized', 'cropped', 'moletom']
+    'Frutos': ['oversized', 'moletom']
 };
 
 // Variações exclusivas do modelo Frutos.
@@ -49,32 +49,11 @@ const productVariants = {
         oversized: {
             price: 55
         },
-        cropped: {
-            price: 45,
-            images: [1, 2, 3, 4, 5].map(number =>
-                `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`
-            )
-        },
         moletom: {
-            price: 110,
+            price: 130,
             images: [1, 2, 3, 4, 5].map(number =>
                 `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`
             )
-        },
-        combo_camisa_cropped: {
-            price: 90,
-            images: [
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`)
-            ]
-        },
-        combo_completo: {
-            price: 180,
-            images: [
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`)
-            ]
         }
     }
 };
@@ -458,7 +437,6 @@ function openProductModal(productName) {
     selectedPrice = product.price;
 
     renderProductTypes(productName);
-    renderProductCombos(productName);
     
     // Preencher informações do produto
     document.getElementById('modal-product-title').textContent = product.name;
@@ -556,36 +534,6 @@ function renderProductTypes(productName) {
         typeOption.textContent = sizesConfig[type].label;
         typeOption.onclick = () => selectType(type, typeOption);
         typeOptionsContainer.appendChild(typeOption);
-    });
-}
-
-// Exibir combos somente para o modelo Frutos
-function renderProductCombos(productName) {
-    const comboSection = document.getElementById('product-combo-section');
-    const comboOptions = document.getElementById('product-combo-options');
-
-    comboOptions.innerHTML = '';
-    comboSection.hidden = productName !== 'Frutos';
-
-    if (productName !== 'Frutos') return;
-
-    [
-        { type: 'combo_camisa_cropped', name: 'Camisa + Cropped', originalPrice: 100, price: 90, savings: 10 },
-        { type: 'combo_completo', name: 'Camisa + Cropped + Moletom', originalPrice: 210, price: 180, savings: 30 }
-    ].forEach(combo => {
-        const option = document.createElement('button');
-        option.type = 'button';
-        option.className = 'combo-option';
-        option.innerHTML = `
-            <span class="combo-check"><i class="fas fa-check"></i></span>
-            <span class="combo-option-content">
-                <strong>${combo.name}</strong>
-                <small class="combo-original-price">De R$ ${combo.originalPrice},00</small>
-                <span class="combo-price">R$ ${combo.price},00</span>
-            </span>
-            <span class="combo-saving">Economize R$ ${combo.savings}</span>`;
-        option.onclick = () => selectType(combo.type, option);
-        comboOptions.appendChild(option);
     });
 }
 
