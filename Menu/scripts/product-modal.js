@@ -26,6 +26,14 @@ const sizesConfig = {
         ],
         sizeGuideImage: './images/tabela-oversized.jpeg'
     },
+    'combo_camisa_moletom': {
+        label: 'Combo Camisa + Moletom',
+        items: [
+            { key: 'camisa', label: 'Camisa', sizes: ['P', 'M', 'G', 'GG'] },
+            { key: 'moletom', label: 'Moletom', sizes: ['P', 'M', 'G', 'GG'] }
+        ],
+        sizeGuideImage: './images/tabela-oversized.jpeg'
+    },
     'combo_completo': {
         label: 'Combo Camisa + Cropped + Moletom',
         items: [
@@ -39,44 +47,59 @@ const sizesConfig = {
 
 const defaultProductTypes = ['oversized'];
 const productTypes = {
-    'Frutos': ['oversized', 'cropped', 'moletom']
+    'Frutos': ['oversized', 'moletom'],
+    'Sustento': ['oversized', 'moletom']
 };
 
-// Variações exclusivas do modelo Frutos.
+// Variações exclusivas de cada modelo.
 // Ao adicionar novas fotos, mantenha estes nomes nas respectivas pastas.
 const productVariants = {
     'Frutos': {
         oversized: {
             price: 55
         },
-        cropped: {
-            price: 45,
-            images: [1, 2, 3, 4, 5].map(number =>
-                `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`
-            )
-        },
         moletom: {
-            price: 110,
+            price: 130,
             images: [1, 2, 3, 4, 5].map(number =>
                 `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`
             )
+        }
+    },
+    'Sustento': {
+        oversized: {
+            price: 55
         },
-        combo_camisa_cropped: {
-            price: 90,
+        moletom: {
+            price: 110,
             images: [
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`)
+                'Blusas/Sustento/Moletom/Mkp Sustento Moletom Frente.webp',
+                'Blusas/Sustento/Moletom/Mkp Sustento Moletom Costas.webp',
+                ...[1, 2, 3, 4, 5, 6].map(number =>
+                    `Blusas/Sustento/Moletom/SustentoMoletom0${number}.webp`
+                )
             ]
         },
-        combo_completo: {
-            price: 180,
+        combo_camisa_moletom: {
+            price: 150,
             images: [
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Camisa/FrutosCamisa0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Cropped/FrutosCropped0${number}.webp`),
-                ...[1, 2, 3].map(number => `Blusas/Frutos/Moletom/FrutosMoletom0${number}.webp`)
+                ...[1, 2, 3].map(number => `Blusas/Sustento/Camisa/Sustento0${number}.webp`),
+                ...[1, 2, 3].map(number => `Blusas/Sustento/Moletom/SustentoMoletom0${number}.webp`)
             ]
         }
     }
+};
+
+// Combos promocionais por modelo.
+const productCombos = {
+    'Sustento': [
+        {
+            type: 'combo_camisa_moletom',
+            name: 'Camisa + Moletom',
+            originalPrice: 165,
+            price: 150,
+            savings: 15
+        }
+    ]
 };
 
 let currentProduct = null;
@@ -559,20 +582,16 @@ function renderProductTypes(productName) {
     });
 }
 
-// Exibir combos somente para o modelo Frutos
+// Exibir combos disponíveis para o modelo
 function renderProductCombos(productName) {
     const comboSection = document.getElementById('product-combo-section');
     const comboOptions = document.getElementById('product-combo-options');
+    const combos = productCombos[productName] || [];
 
     comboOptions.innerHTML = '';
-    comboSection.hidden = productName !== 'Frutos';
+    comboSection.hidden = combos.length === 0;
 
-    if (productName !== 'Frutos') return;
-
-    [
-        { type: 'combo_camisa_cropped', name: 'Camisa + Cropped', originalPrice: 100, price: 90, savings: 10 },
-        { type: 'combo_completo', name: 'Camisa + Cropped + Moletom', originalPrice: 210, price: 180, savings: 30 }
-    ].forEach(combo => {
+    combos.forEach(combo => {
         const option = document.createElement('button');
         option.type = 'button';
         option.className = 'combo-option';
