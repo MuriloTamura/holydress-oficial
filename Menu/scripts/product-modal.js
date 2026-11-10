@@ -71,9 +71,13 @@ const productVariants = {
         },
         moletom: {
             price: 110,
-            images: [1, 2, 3, 4, 5, 6].map(number =>
-                `Blusas/Sustento/Moletom/SustentoMoletom0${number}.webp`
-            )
+            images: [
+                'Blusas/Sustento/Moletom/Mkp Sustento Moletom Frente.webp',
+                'Blusas/Sustento/Moletom/Mkp Sustento Moletom Costas.webp',
+                ...[1, 2, 3, 4, 5, 6].map(number =>
+                    `Blusas/Sustento/Moletom/SustentoMoletom0${number}.webp`
+                )
+            ]
         },
         combo_camisa_moletom: {
             price: 150,
