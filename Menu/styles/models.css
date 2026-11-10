@@ -95,6 +95,13 @@ body{
     grid-column: span 1;
 }
 
+/* Centraliza o card quando a última linha fica com um item isolado */
+@media (min-width: 769px) {
+    .boxes > .box-model:last-child:nth-child(odd) {
+        grid-column: 2;
+    }
+}
+
 /* ============================================
    CARD
    ============================================ */
